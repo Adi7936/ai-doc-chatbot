@@ -3,22 +3,26 @@ import io
 from typing import List, Tuple
 
 import chromadb
-from sentence_transformers import SentenceTransformer
+import cohere
 import pypdf
 
 from .config import get_settings
 
 settings = get_settings()
 
-# Loaded once at startup; downloads ~90 MB on first run
-_embedder = SentenceTransformer("all-MiniLM-L6-v2")
+_cohere = cohere.Client(settings.cohere_api_key)
 
 _chroma = chromadb.PersistentClient(path=settings.chroma_persist_dir)
 _collection = _chroma.get_or_create_collection("documents")
 
 
 def embed_texts(texts: List[str]) -> List[List[float]]:
-    return _embedder.encode(texts, show_progress_bar=False).tolist()
+    response = _cohere.embed(
+        texts=texts,
+        model="embed-english-light-v3.0",
+        input_type="search_document",
+    )
+    return response.embeddings
 
 
 def extract_text(file_bytes: bytes, filename: str) -> str:

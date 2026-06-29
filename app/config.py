@@ -4,6 +4,7 @@ from functools import lru_cache
 
 class Settings(BaseSettings):
     groq_api_key: str
+    cohere_api_key: str
     chroma_persist_dir: str = "./chroma_db"
     chunk_size: int = 500
     chunk_overlap: int = 50

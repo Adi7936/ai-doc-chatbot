@@ -1,14 +1,22 @@
 from typing import List, Dict, Any
 
+import cohere
+
 from .config import get_settings
-from .ingest import get_collection, embed_texts
+from .ingest import get_collection
 
 settings = get_settings()
+_cohere = cohere.Client(settings.cohere_api_key)
 
 
 def retrieve(question: str, doc_id: str | None = None) -> List[Dict[str, Any]]:
     collection = get_collection()
-    query_embedding = embed_texts([question])[0]
+    response = _cohere.embed(
+        texts=[question],
+        model="embed-english-light-v3.0",
+        input_type="search_query",
+    )
+    query_embedding = response.embeddings[0]
 
     where = {"doc_id": doc_id} if doc_id else None
     results = collection.query(

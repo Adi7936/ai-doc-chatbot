@@ -7,6 +7,8 @@ services:
     envVars:
       - key: GROQ_API_KEY
         sync: false          # set manually in Render dashboard
+      - key: COHERE_API_KEY
+        sync: false          # set manually in Render dashboard
       - key: CHROMA_PERSIST_DIR
         value: ./chroma_db
       - key: CHUNK_SIZE

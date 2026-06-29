@@ -3,6 +3,6 @@ uvicorn[standard]
 python-multipart
 pydantic-settings
 groq
-sentence-transformers
+cohere
 chromadb
 pypdf
