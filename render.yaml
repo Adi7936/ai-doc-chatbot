@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: rag-chatbot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false          # set manually in Render dashboard
+      - key: CHROMA_PERSIST_DIR
+        value: ./chroma_db
+      - key: CHUNK_SIZE
+        value: "500"
+      - key: CHUNK_OVERLAP
+        value: "50"
+      - key: TOP_K
+        value: "4"
+    disk:
+      name: chroma-storage
+      mountPath: /opt/render/project/src/chroma_db
+      sizeGB: 1

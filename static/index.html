@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG Chatbot</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+      </div>
+      <h1>RAG<span>Chat</span></h1>
+    </div>
+
+    <div class="upload-section">
+      <h2>Upload Document</h2>
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept=".pdf,.txt" />
+        <div class="drop-icon">📄</div>
+        <p>Drag &amp; drop or <strong>browse</strong><br/>PDF or TXT · max 10 MB</p>
+      </div>
+      <div class="upload-status" id="upload-status">
+        <div class="spinner"></div>
+        <span id="upload-status-text">Processing…</span>
+      </div>
+    </div>
+
+    <div class="doc-list-section">
+      <h2>Documents</h2>
+      <div class="doc-list" id="doc-list">
+        <p class="empty-docs">No documents yet</p>
+      </div>
+    </div>
+
+    <button class="reset-btn" id="reset-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+      </svg>
+      Clear all documents
+    </button>
+  </aside>
+
+  <!-- Chat area -->
+  <main class="chat-area">
+    <header class="chat-header">
+      <div class="status-dot inactive" id="status-dot"></div>
+      <div class="chat-header-info">
+        <h2 id="chat-title">RAG Chatbot</h2>
+        <p id="chat-subtitle">Upload a document to start chatting</p>
+      </div>
+    </header>
+
+    <!-- Welcome / messages -->
+    <div id="welcome" class="welcome">
+      <div class="welcome-icon">🤖</div>
+      <h3>Ask anything about your document</h3>
+      <p>Upload a PDF or TXT file on the left, then type your question below. Answers are grounded only in your document.</p>
+    </div>
+
+    <div class="messages" id="messages" style="display:none;"></div>
+
+    <div class="input-area">
+      <div class="input-wrap">
+        <textarea
+          id="question-input"
+          rows="1"
+          placeholder="Ask a question about your document…"
+          disabled
+        ></textarea>
+      </div>
+      <button class="send-btn" id="send-btn" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
